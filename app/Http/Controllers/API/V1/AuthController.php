@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -35,7 +36,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
-        $token = Auth::login($user);
+        $token = JWTAuth::login($user);
 
         return $this->responseSuccess([
             'user' => $user,
@@ -47,7 +48,7 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (!$token = Auth::attempt($credentials)) {
+        if (!$token = JWTAuth::attempt($credentials)) {
             return $this->responseFail('Credenciais inválidas', 401);
         }
 
