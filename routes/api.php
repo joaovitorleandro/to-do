@@ -12,7 +12,7 @@ Route::prefix('v1')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
 
     // Rotas protegidas por JWT
-    Route::group(['middleware' => ['auth.jwt']], function () {
+    Route::group(['middleware' => ['jwt.auth']], function () {
         Route::get('/tasks', [TaskController::class, 'index']);
         Route::post('/tasks', [TaskController::class, 'store']);
         Route::put('/tasks/{id}', [TaskController::class, 'update']);
